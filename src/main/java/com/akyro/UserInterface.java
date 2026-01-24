@@ -117,6 +117,10 @@ public class UserInterface {
         System.out.println(GREEN + "Exercise added" + RESET);
     }
 
+    private void printWorkoutList(Workout workout) {
+        workout.printWorkout();
+    }
+
     private String chooseWorkoutFile() {
         List<String> workouts = storage.getSavedWorkouts();
         if (workouts.isEmpty()) {
