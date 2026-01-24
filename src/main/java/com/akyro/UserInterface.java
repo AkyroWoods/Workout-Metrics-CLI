@@ -182,6 +182,23 @@ public class UserInterface {
         workoutSaved = false;
     }
 
+    private void viewWorkoutSummary(Workout workout) {
+        if (emptyWorkoutErrorMessage(workout)) {
+            return;
+        }
+        prepareAnalytics(workout);
+        Exercise e = engine.getHighestVolumeExercise();
+
+        System.out.println(CYAN + "\n=== Workout Summary ===" + RESET);
+        System.out.println("Workout: " + workout.getName());
+        System.out.println("Total Sets: " + workout.totalSets());
+        System.out.println("Total Reps: " + workout.totalReps());
+        System.out.println("Total Volume: " + workout.calculateTotalWorkoutVolume() + " lbs");
+        System.out.println("Highest Volume Exercise: " +
+                GREEN + e.getName() + RESET +
+                " (" + e.calculateTotalVolume() + " lbs)");
+    }
+
     private String chooseWorkoutFile() {
         List<String> workouts = storage.getSavedWorkouts();
         if (workouts.isEmpty()) {
