@@ -7,6 +7,9 @@ public class Exercise {
     private double weight;
     private String muscleGroup;
 
+    public Exercise() {
+        
+    }
     public Exercise(String name, int sets, int reps, double weight, String muscleGroup)
             throws IllegalArgumentException {
         if (name == null || name.isBlank()) {

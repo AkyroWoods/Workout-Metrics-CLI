@@ -6,6 +6,9 @@ public class Workout {
     private ArrayList<Exercise> exercises;
     private String name;
 
+    public Workout () {
+        
+    }
     public Workout(String name) {
         this.name = name;
         this.exercises = new ArrayList<>();
@@ -19,9 +22,14 @@ public class Workout {
     public ArrayList<Exercise> getExercises() {
         return exercises;
     }
+
+    public void setExercises(ArrayList<Exercise> exercises) {
+        this.exercises = exercises;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
     
-
-
     public void addExercise(Exercise exercise) {
         exercises.add(exercise);
     }

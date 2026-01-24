@@ -1,5 +1,6 @@
 package com.akyro;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class UserInterface {
@@ -144,6 +145,14 @@ public class UserInterface {
                     }
                     break;
 
+                case 7:
+                    String fileName = chooseWorkoutFile();
+                    if (fileName == null){
+                        return;
+                    }
+                    Workout loadedWorkout = storage.loadWorkout(fileName);
+                    break;
+
                 default:
                     System.out.println(RED + "Unknown command. Type 'help' to see available options" + RESET);
             }
@@ -161,69 +170,9 @@ public class UserInterface {
         System.out.println("4: Print workout summary");
         System.out.println("5: Show workout analytics");
         System.out.println("6: Save workout");
+        System.out.println("7: Load Workout(s)");
         System.out.println("help - List commands again");
         System.out.println("quit - Quit the program");
-    }
-
-    private boolean isInteger(String input) {
-        try {
-            Integer.parseInt(input);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
-    }
-
-    private String readNonBlankString(String prompt) {
-        while (true) {
-            System.out.print(YELLOW + prompt + RESET);
-            String input = scanner.nextLine();
-
-            if (input.isBlank()) {
-                System.out.println(RED + "Please enter a non blank name" + RESET);
-                continue;
-            }
-            return input;
-        }
-    }
-
-    private int readPositiveInteger(String prompt) {
-        while (true) {
-            System.out.print(YELLOW + prompt + RESET);
-            String input = scanner.nextLine();
-
-            if (!isInteger(input)) {
-                System.out.println(RED + "Please enter a whole number" + RESET);
-                continue;
-            }
-
-            int value = Integer.parseInt(input);
-
-            if (value < 1) {
-                System.out.println(RED + "Please enter a positive number" + RESET);
-                continue;
-            }
-            return value;
-        }
-    }
-
-    private double readNonNegativeDouble(String prompt) {
-        while (true) {
-            System.out.print(YELLOW + prompt + RESET);
-            String input = scanner.nextLine();
-
-            try {
-                double weight = Double.parseDouble(input);
-                if (weight < 0) {
-                    System.out.println(RED + "Please enter a non negative number" + RESET);
-                    continue;
-                }
-                return weight;
-
-            } catch (NumberFormatException e) {
-                System.out.println(RED + "Please enter a number" + RESET);
-            }
-        }
     }
 
     private void editExercise(Workout workout) {
@@ -288,14 +237,33 @@ public class UserInterface {
         }
         workoutSaved = false;
     }
+    private String chooseWorkoutFile() {
+        List<String> workouts = storage.getSavedWorkouts();
+                    if (workouts.isEmpty()) {
+                        System.out.println(RED + "No workouts to load");
+                        return null;
+                    }
+                    System.out.println(CYAN + "=== Saved Workouts ===" + RESET);
 
-    private boolean emptyWorkoutErrorMessage(Workout workout) {
-        if (workout.size() == 0) {
-            System.out.println(RED + "The workout has no exercises added." + RESET);
-            return true;
-        }
-        return false;
+                    int fileCounter = 1;
+                    for (String workoutData : workouts) {
+                        System.out.println(fileCounter + ". " + workoutData);
+                        fileCounter++;
+                    }
+                    System.out.print("Enter the number of the workout to load: ");
+                    int input = Integer.valueOf(scanner.nextLine()) - 1;
+
+                    while (input < 0 || input >= workouts.size()) {
+                        System.out.println("Please enter a valid workout to load");
+                        System.out.print("Enter the number of the workout to load: ");
+                        input = Integer.valueOf(scanner.nextLine()) - 1;
+                    }
+
+                    String fileName = workouts.get(input);
+                    return fileName;
+                
     }
+
 
     private void prepareAnalytics(Workout workout) {
         engine.calculateVolumeBreakdown(workout);
@@ -335,7 +303,76 @@ public class UserInterface {
                 " (" + highest.calculateTotalVolume() + " lbs)");
     }
 
+    private boolean emptyWorkoutErrorMessage(Workout workout) {
+        if (workout.size() == 0) {
+            System.out.println(RED + "The workout has no exercises added." + RESET);
+            return true;
+        }
+        return false;
+    }
+
     private String formatPercent(double value) {
         return String.format("%.2f%%", value * 100);
+    }
+
+    private boolean isInteger(String input) {
+        try {
+            Integer.parseInt(input);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private String readNonBlankString(String prompt) {
+        while (true) {
+            System.out.print(YELLOW + prompt + RESET);
+            String input = scanner.nextLine();
+
+            if (input.isBlank()) {
+                System.out.println(RED + "Please enter a non blank name" + RESET);
+                continue;
+            }
+            return input;
+        }
+    }
+
+    private int readPositiveInteger(String prompt) {
+        while (true) {
+            System.out.print(YELLOW + prompt + RESET);
+            String input = scanner.nextLine();
+
+            if (!isInteger(input)) {
+                System.out.println(RED + "Please enter a whole number" + RESET);
+                continue;
+            }
+
+            int value = Integer.parseInt(input);
+
+            if (value < 1) {
+                System.out.println(RED + "Please enter a positive number" + RESET);
+                continue;
+            }
+            return value;
+        }
+    }
+
+    private double readNonNegativeDouble(String prompt) {
+        while (true) {
+            System.out.print(YELLOW + prompt + RESET);
+            String input = scanner.nextLine();
+
+            try {
+                double weight = Double.parseDouble(input);
+                if (weight < 0) {
+                    System.out.println(RED + "Please enter a non negative number" + RESET);
+                    continue;
+                }
+                return weight;
+
+            } catch (NumberFormatException e) {
+                System.out.println(RED + "Please enter a number" + RESET);
+            }
+        }
     }
 }
