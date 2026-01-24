@@ -13,10 +13,13 @@ public class UserInterface {
 
     private Scanner scanner;
     private final AnalyticsEngine engine;
+    private final WorkoutStorage storage;
 
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
         this.engine = new AnalyticsEngine();
+        this.storage = new WorkoutStorage();
+
     }
 
     public void start() {
@@ -123,6 +126,17 @@ public class UserInterface {
                     prepareAnalytics(workout);
                     showWorkoutAnalytics(workout);
                     break;
+                
+                case 7: 
+                 if (emptyWorkoutErrorMessage(workout)) {
+                        return;
+                    }
+                    if (storage.saveWorkout(workout)) {
+                        System.out.println(GREEN + "Workout Saved!" + RESET);
+                    } else {
+                        System.out.println(RED + "Could not save workout" + RESET);
+                    }
+                    break;
 
                 default:
                     System.out.println(RED + "Unknown command. Type 'help' to see available options" + RESET);
@@ -141,6 +155,7 @@ public class UserInterface {
         System.out.println("4: Show highest volume exercise");
         System.out.println("5: Print workout summary");
         System.out.println("6: Show workout analytics");
+        System.out.println("7: Save workout");
         System.out.println("help - List commands again");
         System.out.println("quit - Quit the program");
     }
