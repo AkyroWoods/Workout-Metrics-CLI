@@ -162,7 +162,7 @@ public class UserInterface {
     }
 
     private void printCondensedWorkoutSummary(Workout workout) {
-        System.out.println(CYAN + " === " + workout.getName() + " Summary" + " ===" + RESET);
+        System.out.println(CYAN + "=== " + workout.getName() + " Summary" + " ===" + RESET);
         System.out.println("Total Volume: " + workout.calculateTotalWorkoutVolume() + " lbs");
         System.out.println("Exercises:");
         for (Exercise e : workout.getExercises()) {
