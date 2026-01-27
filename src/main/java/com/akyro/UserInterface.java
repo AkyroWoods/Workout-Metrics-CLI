@@ -48,7 +48,7 @@ public class UserInterface {
                     deleteWorkout();
                     break;
                 case 5:
-                    help();
+                    printMainHelp();
                     break;
                 case 6:
                     quit();
@@ -65,7 +65,7 @@ public class UserInterface {
         System.out.println("2: Load workout");
         System.out.println("3: List saved workouts");
         System.out.println("4: Delete workout");
-        System.out.println("5: Reprint commands ");
+        System.out.println("5: Help/Reprint commands ");
         System.out.println("6: Quit main menu");
 
     }
@@ -129,7 +129,7 @@ public class UserInterface {
         }
         String workoutToDelete = workouts.get(cmd);
 
-        System.out.print(YELLOW + "Are you sure you want to delete '" + workoutToDelete + "'? (y/n): " + RESET);
+        System.out.print(YELLOW + "Are you sure you want to delete '" + workoutToDelete + "? (y/n): " + RESET);
         String confirm = scanner.nextLine().trim().toLowerCase();
 
         if (!confirm.equals("y")) {
@@ -146,7 +146,7 @@ public class UserInterface {
         }
     }
 
-    public void help() {
+    public void printMainHelp() {
         printMainMenu();
     }
 
@@ -162,7 +162,7 @@ public class UserInterface {
             int cmd = readPositiveInteger("Command: ");
 
             while (cmd < 1 || cmd > 8) {
-                System.out.println(RED + "Invalid Option. Please choose 1-7." + RESET);
+                System.out.println(RED + "Invalid Option. Please choose 1-8." + RESET);
                 cmd = readPositiveInteger("Command: ");
             }
             switch (cmd) {
@@ -180,16 +180,17 @@ public class UserInterface {
                     printLoadedWorkoutMenu(workout);
                     break;
                 case 5:
+                    printLoadedWorkoutMenu(workout);
+                    break;
+                    case 6:
                     showWorkoutAnalytics(workout);
                     break;
-                case 6:
+                    case 7:
                     saveWorkout(workout);
-                    break;
-                case 7:
-                    printLoadedWorkoutMenu(workout);
                     break;
                 case 8:
                     if (handleQuitLoadedMenu(workout)) {
+                        printMainMenu();
                         return;
                     }
                     break;
@@ -201,11 +202,11 @@ public class UserInterface {
         System.out.println(CYAN + "=== Workout: " + workout.getName() + " ===" + RESET);
         System.out.println("1: Add exercise");
         System.out.println("2: List workout");
-        System.out.println("3: Edit exercise");
+        System.out.println("3: Edit exercises");
         System.out.println("4: View summary");
-        System.out.println("5: View analytics");
-        System.out.println("6: Save workout");
-        System.out.println("7: Reprint commands");
+        System.out.println("5: Help/Reprint commands ");
+        System.out.println("6: View analytics");
+        System.out.println("7: Save workout");
         System.out.println("8: Return to main menu");
     }
 
@@ -245,7 +246,6 @@ public class UserInterface {
             System.out.println(RED + "Please enter a valid number");
             System.out.print("Enter number of exericse to edit: ");
             exerciseInput = Integer.valueOf(scanner.nextLine()) - 1;
-
         }
         System.out.println();
 
@@ -369,6 +369,7 @@ public class UserInterface {
     }
 
     private void showWorkoutAnalytics(Workout workout) {
+        prepareAnalytics(workout);
 
         System.out.println(CYAN + "\n=== Workout Analytics ===" + RESET);
 

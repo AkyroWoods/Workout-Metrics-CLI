@@ -8,8 +8,9 @@ public class Exercise {
     private String muscleGroup;
 
     public Exercise() {
-        
+
     }
+
     public Exercise(String name, int sets, int reps, double weight, String muscleGroup)
             throws IllegalArgumentException {
         if (name == null || name.isBlank()) {
@@ -96,18 +97,18 @@ public class Exercise {
     public String classifyExercise() {
         String muscleGroup = this.muscleGroup;
 
-          return switch (muscleGroup) {
+        return switch (muscleGroup) {
             case "chest", "shoulders", "triceps" -> "Push";
-            case "lats", "biceps", "erectors", "back", "traps", "pull" -> "Pull";
+            case "lats", "biceps", "erectors", "back", "traps", "forearms", "pull" -> "Pull";
             case "quads", "hamstrings", "calves", "glutes", "legs", "adductors", "abductors" -> "Legs";
             default -> "Other";
         };
-        
+
     }
 
     @Override
     public String toString() {
-        return name + " - " +"(" + sets + "x" + reps + " @ " + weight + " lbs)";
+        return name + " - " + "(" + sets + "x" + reps + " @ " + weight + " lbs)";
     }
 
 }

@@ -41,20 +41,21 @@ public class WorkoutStorage {
     }
 
     public Workout loadWorkout(String filename) {
-       Path filePath = Paths.get("data/", filename);
+        Path filePath = Paths.get("data/", filename);
 
-       try {
-        return mapper.readValue(filePath.toFile(), Workout.class);
-       } catch (IOException e) {
-        System.err.println("Failed to load workout file: " + e.getMessage());
-        return null;
-       }
+        try {
+            return mapper.readValue(filePath.toFile(), Workout.class);
+        } catch (IOException e) {
+            System.err.println("Failed to load workout file: " + e.getMessage());
+            return null;
+        }
     }
 
     public boolean deleteWorkout(String filename) {
         File file = new File(DATA_DIR, filename);
         return file.delete();
     }
+
     public List<String> getSavedWorkouts() {
         return listFiles();
     }
