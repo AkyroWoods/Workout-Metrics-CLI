@@ -1,7 +1,16 @@
 package com.akyro;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.List;
 import java.util.Scanner;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class UserInterface {
 
@@ -410,7 +419,8 @@ public class UserInterface {
 
         int fileCounter = 1;
         for (String workoutData : workouts) {
-            System.out.println(fileCounter + ". " + workoutData);
+
+            System.out.println(fileCounter + ". " + workoutData + " (Created at: " + fileCreationDate(workoutData) + ")" );
             fileCounter++;
         }
         System.out.print("Enter the number of the workout to load: ");
@@ -425,6 +435,20 @@ public class UserInterface {
         String fileName = workouts.get(input);
         return fileName;
 
+    }
+
+    private String fileCreationDate(String fileName) {
+        try {
+            Path filePath = Paths.get("data/", fileName);
+            BasicFileAttributes attr = Files.readAttributes(filePath, BasicFileAttributes.class);
+            Instant fileCreationTime = attr.creationTime().toInstant();
+            DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+            LocalDateTime time = LocalDateTime.ofInstant(fileCreationTime, ZoneId.systemDefault());
+            return dateFormat.format(time);
+
+        } catch (IOException e) {
+            return "unknown";
+        }
     }
 
     private void prepareAnalytics(Workout workout) {

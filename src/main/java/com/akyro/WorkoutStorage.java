@@ -42,7 +42,6 @@ public class WorkoutStorage {
 
     public Workout loadWorkout(String filename) {
         Path filePath = Paths.get("data/", filename);
-
         try {
             return mapper.readValue(filePath.toFile(), Workout.class);
         } catch (IOException e) {
@@ -92,6 +91,7 @@ public class WorkoutStorage {
         List<String> workouts = new ArrayList<>();
 
         try (Stream<Path> jsonFiles = Files.list(dirPath)) {
+            
             jsonFiles.filter(Files::isRegularFile)
                     .filter(path -> path.getFileName().toString().endsWith(".json"))
                     .forEach(path -> workouts.add(path.getFileName().toString()));
