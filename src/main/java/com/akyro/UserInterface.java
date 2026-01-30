@@ -22,65 +22,60 @@ public class UserInterface {
     private static final String RESET = "\u001B[0m";
 
     private Scanner scanner;
-    private final AnalyticsEngine engine;
-    private final WorkoutStorage storage;
+    private final AnalyticsEngine engine = new AnalyticsEngine();
+    private final WorkoutStorage storage = new WorkoutStorage();
+    private final PrintMenus menuPrinter = new PrintMenus();
     private boolean workoutSaved = true;
 
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
-        this.engine = new AnalyticsEngine();
-        this.storage = new WorkoutStorage();
     }
 
     public void start() {
         runMainMenu();
     }
 
+    private static final int CREATE_WORKOUT = 1;
+    private static final int LOAD_WORKOUT = 2;
+    private static final int LIST_SAVED_WORKOUTS = 3;
+    private static final int COMPARE_TWO_WORKOUTS = 4;
+    private static final int DELETE_WORKOUT = 5;
+    private static final int REPRINT_COMMANDS_MAIN = 6;
+    private static final int QUIT_MAIN_MENU = 7;
+
     private void runMainMenu() {
-        printMainMenu();
+        menuPrinter.printMainMenu();
         while (true) {
             int cmd = readPositiveInteger("Command: ");
 
             switch (cmd) {
-                case 1:
+                case CREATE_WORKOUT:
                     createWorkout();
                     break;
-                case 2:
+                case LOAD_WORKOUT:
                     loadWorkout();
                     break;
-                case 3:
+                case LIST_SAVED_WORKOUTS:
                     listSavedWorkouts();
                     System.out.println();
-                    printMainMenu();
+                    menuPrinter.printMainMenu();
                     break;
-                case 4:
+                case COMPARE_TWO_WORKOUTS:
                     compareWorkouts();
                     break;
-                case 5:
+                case DELETE_WORKOUT:
                     deleteWorkout();
                     break;
-                case 6:
-                    printMainHelp();
+                case REPRINT_COMMANDS_MAIN:
+                    menuPrinter.printMainMenu();
                     break;
-                case 7:
+                case QUIT_MAIN_MENU:
                     quit();
                     break;
                 default:
                     System.out.println(RED + "Unknown command. Type 5 to see available options" + RESET);
             }
         }
-    }
-
-    private void printMainMenu() {
-        System.out.println(CYAN + "=== Main Menu ===" + RESET);
-        System.out.println("1: Create workout");
-        System.out.println("2: Load workout");
-        System.out.println("3: List saved workouts");
-        System.out.println("4: Compare two workouts");
-        System.out.println("5: Delete workout");
-        System.out.println("6: Help/Reprint commands ");
-        System.out.println("7: Quit main menu");
-
     }
 
     private void createWorkout() {
@@ -218,17 +213,22 @@ public class UserInterface {
         }
     }
 
-    public void printMainHelp() {
-        printMainMenu();
-    }
-
     public void quit() {
         System.out.println(YELLOW + "Exiting program..." + RESET);
         System.exit(0);
     }
 
+    private static final int ADD_EXERCISE = 1;
+    private static final int LIST_WORKOUT = 2;
+    private static final int EDIT_EXERCISE = 3;
+    private static final int VIEW_SUMMARY = 4;
+    private static final int REPRINT_COMMANDS_LOADED = 5;
+    private static final int VIEW_ANALYTICS = 6;
+    private static final int SAVE_WORKOUT = 7;
+    private static final int QUIT_LOADED_MENU = 8;
+
     private void loadedWorkoutMenu(Workout workout) {
-        printLoadedWorkoutMenu(workout);
+        menuPrinter.printLoadedWorkoutMenu(workout);
 
         while (true) {
             int cmd = readPositiveInteger("Command: ");
@@ -238,48 +238,37 @@ public class UserInterface {
                 cmd = readPositiveInteger("Command: ");
             }
             switch (cmd) {
-                case 1:
+                case ADD_EXERCISE:
                     addExerciseToWorkout(workout);
                     break;
-                case 2:
+                case LIST_WORKOUT:
                     printWorkoutList(workout);
                     break;
-                case 3:
+                case EDIT_EXERCISE:
                     editExercise(workout);
                     break;
-                case 4:
+                case VIEW_SUMMARY:
                     viewWorkoutSummary(workout);
-                    printLoadedWorkoutMenu(workout);
+                    menuPrinter.printLoadedWorkoutMenu(workout);
                     break;
-                case 5:
-                    printLoadedWorkoutMenu(workout);
+                case REPRINT_COMMANDS_LOADED:
+                    menuPrinter.printLoadedWorkoutMenu(workout);
                     break;
-                case 6:
+                case VIEW_ANALYTICS:
                     showWorkoutAnalytics(workout);
                     break;
-                case 7:
+                case SAVE_WORKOUT:
                     saveWorkout(workout);
                     break;
-                case 8:
+                case QUIT_LOADED_MENU:
                     if (handleQuitLoadedMenu(workout)) {
-                        printMainMenu();
+                        menuPrinter.printMainMenu();
+                        ;
                         return;
                     }
                     break;
             }
         }
-    }
-
-    private void printLoadedWorkoutMenu(Workout workout) {
-        System.out.println(CYAN + "=== Workout: " + workout.getName() + " ===" + RESET);
-        System.out.println("1: Add exercise");
-        System.out.println("2: List workout");
-        System.out.println("3: Edit exercises");
-        System.out.println("4: View summary");
-        System.out.println("5: Help/Reprint commands ");
-        System.out.println("6: View analytics");
-        System.out.println("7: Save workout");
-        System.out.println("8: Return to main menu");
     }
 
     private void addExerciseToWorkout(Workout workout) {
@@ -420,7 +409,8 @@ public class UserInterface {
         int fileCounter = 1;
         for (String workoutData : workouts) {
 
-            System.out.println(fileCounter + ". " + workoutData + " (Created at: " + fileCreationDate(workoutData) + ")" );
+            System.out
+                    .println(fileCounter + ". " + workoutData + " (Created at: " + fileCreationDate(workoutData) + ")");
             fileCounter++;
         }
         System.out.print("Enter the number of the workout to load: ");
