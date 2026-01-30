@@ -21,7 +21,8 @@ public class UserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String RESET = "\u001B[0m";
 
-    private Scanner scanner;
+    private final Scanner scanner;
+    private final InputReader inputReader;
     private final AnalyticsEngine engine = new AnalyticsEngine();
     private final WorkoutStorage storage = new WorkoutStorage();
     private final PrintMenus menuPrinter = new PrintMenus();
@@ -29,6 +30,7 @@ public class UserInterface {
 
     public UserInterface(Scanner scanner) {
         this.scanner = scanner;
+        this.inputReader = new InputReader(scanner);
     }
 
     public void start() {
@@ -43,10 +45,13 @@ public class UserInterface {
     private static final int REPRINT_COMMANDS_MAIN = 6;
     private static final int QUIT_MAIN_MENU = 7;
 
+    private static final int MAIN_MENU_MIN = 1;
+    private static final int MAIN_MENU_MAX = 8;
     private void runMainMenu() {
         menuPrinter.printMainMenu();
         while (true) {
-            int cmd = readPositiveInteger("Command: ");
+          int cmd = inputReader.readMenuChoice("Command: ", 
+          MAIN_MENU_MIN, MAIN_MENU_MAX);
 
             switch (cmd) {
                 case CREATE_WORKOUT:
@@ -227,16 +232,16 @@ public class UserInterface {
     private static final int SAVE_WORKOUT = 7;
     private static final int QUIT_LOADED_MENU = 8;
 
+    private static final int LOADED_WORKOUT_MENU_MIN = 1;
+    private static final int LOADED_WORKOUT_MENU_MAX = 8;
+
     private void loadedWorkoutMenu(Workout workout) {
         menuPrinter.printLoadedWorkoutMenu(workout);
 
         while (true) {
-            int cmd = readPositiveInteger("Command: ");
+            int cmd = inputReader.readMenuChoice("Command: ",
+             LOADED_WORKOUT_MENU_MIN, LOADED_WORKOUT_MENU_MAX);
 
-            while (cmd < 1 || cmd > 8) {
-                System.out.println(RED + "Invalid Option. Please choose 1-8." + RESET);
-                cmd = readPositiveInteger("Command: ");
-            }
             switch (cmd) {
                 case ADD_EXERCISE:
                     addExerciseToWorkout(workout);
@@ -303,7 +308,7 @@ public class UserInterface {
         System.out.print(YELLOW + "Enter number of exericse to edit: " + RESET);
         int exerciseInput = Integer.valueOf(scanner.nextLine()) - 1;
 
-        while (exerciseInput < 0 || exerciseInput >= workout.size()) {
+        while (exerciseInput < 0 && exerciseInput >= workout.size()) {
             System.out.println(RED + "Please enter a valid number");
             System.out.print("Enter number of exericse to edit: ");
             exerciseInput = Integer.valueOf(scanner.nextLine()) - 1;
@@ -318,7 +323,7 @@ public class UserInterface {
         System.out.print("Which would you like to edit: ");
 
         int menuInput = Integer.valueOf(scanner.nextLine());
-        while (menuInput < 0 || menuInput > 5) {
+        while (menuInput < 0 && menuInput > 5) {
             System.out.println(RED + "Enter a number between 1-5" + RESET);
             System.out.print("Which would you like to edit: ");
             menuInput = Integer.valueOf(scanner.nextLine());
