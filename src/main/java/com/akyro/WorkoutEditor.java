@@ -51,4 +51,16 @@ public class WorkoutEditor {
         }
 
     }
+
+    public void addExerciseToWorkout(Workout workout) {
+        String name = inputReader.readNonBlankString("Name: ");
+        int sets = inputReader.readPositiveInteger("Sets: ");
+        int reps = inputReader.readPositiveInteger("Reps: ");
+        double weight = inputReader.readNonNegativeDouble("Weight: ");
+        String muscleGroup = inputReader.readNonBlankString("Muscle Group: ");
+
+        Exercise exercise = new Exercise(name, sets, reps, weight, muscleGroup);
+        workout.addExercise(exercise);
+
+    }
 }
