@@ -87,7 +87,7 @@ public class Exercise {
         if (muscleGroup == null || muscleGroup.isBlank()) {
             throw new IllegalArgumentException("Muscle group cannot be blank");
         }
-        this.muscleGroup = muscleGroup;
+        this.muscleGroup = muscleGroup.toLowerCase();
     }
 
     public double calculateTotalVolume() {
@@ -108,7 +108,7 @@ public class Exercise {
 
     @Override
     public String toString() {
-        return name + " - " + "(" + sets + "x" + reps + " @ " + weight + " lbs)";
+        return name + " - " + "(" + sets + "x" + reps + " @ " + FormatUtils.formatNumber(weight) + " lbs)";
     }
 
 }

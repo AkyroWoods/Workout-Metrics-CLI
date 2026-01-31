@@ -74,8 +74,9 @@ public class WorkoutEditor {
     public void deleteExercise(Workout workout) {
         workout.printWorkout();
 
-        int exerciseToDelete = inputReader.readMenuChoice("Choose an exercise to delete",
+        int exerciseToDelete = inputReader.readMenuChoice("Choose an exercise to delete: ",
                 1, workout.size()) - 1;
+        System.out.println();
 
         Exercise deletedExercise = workout.getExercises().get(exerciseToDelete);
         String confirm = inputReader.readNonBlankString(YELLOW + "Are you sure you want to delete "
@@ -86,7 +87,7 @@ public class WorkoutEditor {
             return;
         }
 
-        boolean success = workout.removeExercise(exerciseToDelete);
+        boolean success = workout.removeExercise(deletedExercise);
         if (success) {
             System.out.println(GREEN + "Workout deleted." + RESET);
         } else {

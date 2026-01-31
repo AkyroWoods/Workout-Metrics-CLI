@@ -35,8 +35,8 @@ public class Workout {
         exercises.add(exercise);
     }
 
-    public void removeExercise(int index) {
-        exercises.remove(index);
+    public boolean removeExercise(Exercise deletedExercise) {
+        return exercises.remove(deletedExercise);
     }
 
     public double calculateTotalWorkoutVolume() {

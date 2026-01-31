@@ -39,24 +39,23 @@ public class WorkoutEditorTest {
         workout.addExercise(exercise);
         String fakeInput = String.join("\n",
                 "1",
-            //Edit name
+                // Edit name
                 "1",
                 "Squat",
-            //Edit sets
+                // Edit sets
                 "2",
                 "5",
-            //Edit reps
+                // Edit reps
                 "3",
                 "5",
-            //Edit weight
+                // Edit weight
                 "4",
                 "225",
-            //Edit Muscle group
+                // Edit Muscle group
                 "5",
                 "quads",
-            // Done editing
-                "6"
-    );
+                // Done editing
+                "6");
         Scanner scanner = new Scanner(fakeInput);
         InputReader reader = new InputReader(scanner);
         WorkoutEditor editor = new WorkoutEditor(reader);
@@ -71,14 +70,14 @@ public class WorkoutEditorTest {
 
     @Test
     public void deleteExerciseTest() {
-              Workout workout = new Workout("Test");
+        Workout workout = new Workout("Test");
         Exercise exercise = new Exercise("Leg Press",
                 3, 12, 135, "legs");
         workout.addExercise(exercise);
 
         String fakeInput = String.join("\n",
-         "1", "y");
-       
+                "1", "y");
+
         Scanner scanner = new Scanner(fakeInput);
         InputReader reader = new InputReader(scanner);
         WorkoutEditor editor = new WorkoutEditor(reader);

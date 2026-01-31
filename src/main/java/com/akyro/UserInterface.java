@@ -21,7 +21,6 @@ public class UserInterface {
     private static final String CYAN = "\u001B[36m";
     private static final String RESET = "\u001B[0m";
 
-    private final Scanner scanner;
     private final InputReader inputReader;
     private final AnalyticsEngine engine = new AnalyticsEngine();
     private final WorkoutStorage storage = new WorkoutStorage();
@@ -30,9 +29,8 @@ public class UserInterface {
     private final AnalyticsPrinter analyticsPrinter;
     private boolean workoutSaved = true;
 
-    public UserInterface(Scanner scanner) {
-        this.scanner = scanner;
-        this.inputReader = new InputReader(scanner);
+    public UserInterface() {
+        this.inputReader = new InputReader(new Scanner(System.in));
         this.workoutEditor = new WorkoutEditor(inputReader);
         this.analyticsPrinter = new AnalyticsPrinter(engine);
     }
@@ -154,19 +152,17 @@ public class UserInterface {
 
         int cmd = inputReader.readMenuChoice("Choose a workout to delete",
                 1, storage.getSavedWorkouts().size()) - 1;
-
         String workoutToDelete = workouts.get(cmd);
 
-        System.out.print(YELLOW + "Are you sure you want to delete " + workoutToDelete + "? (y/n): " + RESET);
-        String confirm = scanner.nextLine().trim().toLowerCase();
+        String confirm = inputReader.readNonBlankString(YELLOW + "Are you sure you want to delete "
+                + workoutToDelete + "? (y/n): " + RESET);
 
-        if (!confirm.equals("y")) {
+        if (!confirm.equalsIgnoreCase("y")) {
             System.out.println(CYAN + "Deletion cancelled." + RESET);
             return;
         }
 
         boolean success = storage.deleteWorkout(workoutToDelete);
-
         if (success) {
             System.out.println(GREEN + "Workout deleted." + RESET);
         } else {
@@ -182,14 +178,15 @@ public class UserInterface {
     private static final int ADD_EXERCISE = 1;
     private static final int LIST_WORKOUT = 2;
     private static final int EDIT_EXERCISE = 3;
-    private static final int VIEW_SUMMARY = 4;
-    private static final int REPRINT_COMMANDS_LOADED = 5;
-    private static final int VIEW_ANALYTICS = 6;
-    private static final int SAVE_WORKOUT = 7;
-    private static final int QUIT_LOADED_MENU = 8;
+    private static final int DELETE_EXERCISE = 4;
+    private static final int VIEW_SUMMARY = 5;
+    private static final int REPRINT_COMMANDS_LOADED = 6;
+    private static final int VIEW_ANALYTICS = 7;
+    private static final int SAVE_WORKOUT = 8;
+    private static final int QUIT_LOADED_MENU = 9;
 
     private static final int LOADED_WORKOUT_MENU_MIN = 1;
-    private static final int LOADED_WORKOUT_MENU_MAX = 8;
+    private static final int LOADED_WORKOUT_MENU_MAX = 9;
 
     private void loadedWorkoutMenu(Workout workout) {
         menuPrinter.printLoadedWorkoutMenu(workout);
@@ -208,9 +205,11 @@ public class UserInterface {
                 case EDIT_EXERCISE:
                     editExercise(workout);
                     break;
+                case DELETE_EXERCISE: 
+                    workoutEditor.deleteExercise(workout);
+                    break;
                 case VIEW_SUMMARY:
                     viewWorkoutSummary(workout);
-                    menuPrinter.printLoadedWorkoutMenu(workout);
                     break;
                 case REPRINT_COMMANDS_LOADED:
                     menuPrinter.printLoadedWorkoutMenu(workout);
@@ -223,8 +222,8 @@ public class UserInterface {
                     break;
                 case QUIT_LOADED_MENU:
                     if (handleQuitLoadedMenu(workout)) {
+                        System.out.println();
                         menuPrinter.printMainMenu();
-                        ;
                         return;
                     }
                     break;
@@ -266,7 +265,7 @@ public class UserInterface {
         System.out.println("Workout: " + workout.getName());
         System.out.println("Total Sets: " + workout.totalSets());
         System.out.println("Total Reps: " + workout.totalReps());
-        System.out.println("Total Volume: " + workout.calculateTotalWorkoutVolume() + " lbs");
+        System.out.println("Total Volume: " + FormatUtils.formatNumber(workout.calculateTotalWorkoutVolume()) + " lbs");
 
         System.out.println();
     }
@@ -285,8 +284,7 @@ public class UserInterface {
 
     private boolean handleQuitLoadedMenu(Workout workout) {
         if (!workoutSaved) {
-            System.out.print(YELLOW + "You have unsaved changes. Save before returning? (y/n): " + RESET);
-            String input = scanner.nextLine().trim().toLowerCase();
+            String input = inputReader.readNonBlankString(YELLOW + "You have unsaved changes. Save before returning? (y/n): " + RESET);
 
             if (input.equals("y")) {
                 saveWorkout(workout);
@@ -301,19 +299,21 @@ public class UserInterface {
             System.out.println(RED + "No workouts to load");
             return null;
         }
+
+        System.out.println();
         System.out.println(CYAN + "=== Saved Workouts ===" + RESET);
 
         int fileCounter = 1;
         for (String workoutData : workouts) {
 
-            System.out
-                    .println(fileCounter + ". " + workoutData + " (Created at: " + fileCreationDate(workoutData) + ")");
+            System.out.println(fileCounter + ". " + workoutData + " (Created at: " + fileCreationDate(workoutData) + ")");
             fileCounter++;
         }
 
         int maxNumberOfWorkouts = workouts.size();
-        int input = inputReader.readMenuChoice("Choose workout to load",
+        int input = inputReader.readMenuChoice("Choose workout to load: ",
                 1, maxNumberOfWorkouts) - 1;
+                System.out.println();
         String fileName = workouts.get(input);
 
         return fileName;
@@ -335,6 +335,7 @@ public class UserInterface {
 
     private void showWorkoutAnalytics(Workout workout) {
         analyticsPrinter.printWorkoutAnalytics(workout);
+        System.out.println();
     }
 
     private boolean emptyWorkout(Workout workout) {

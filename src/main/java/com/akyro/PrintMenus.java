@@ -26,10 +26,11 @@ public class PrintMenus {
         System.out.println("1: Add exercise");
         System.out.println("2: List workout");
         System.out.println("3: Edit exercises");
-        System.out.println("4: View summary");
-        System.out.println("5: Help/Reprint commands ");
-        System.out.println("6: View analytics");
-        System.out.println("7: Save workout");
-        System.out.println("8: Return to main menu");
+        System.out.println("4: Delete exercise");
+        System.out.println("5: View summary");
+        System.out.println("6: Help/Reprint commands ");
+        System.out.println("7: View analytics");
+        System.out.println("8: Save workout");
+        System.out.println("9: Return to main menu");
     }
 }
