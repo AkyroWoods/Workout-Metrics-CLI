@@ -3,6 +3,12 @@ package com.akyro;
 public class WorkoutEditor {
     private final InputReader inputReader;
 
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String RESET = "\u001B[0m";
+
     public WorkoutEditor(InputReader inputReader) {
         this.inputReader = inputReader;
     }
@@ -63,5 +69,28 @@ public class WorkoutEditor {
         Exercise exercise = new Exercise(name, sets, reps, weight, muscleGroup);
         workout.addExercise(exercise);
 
+    }
+
+    public void deleteExercise(Workout workout) {
+        workout.printWorkout();
+
+        int exerciseToDelete = inputReader.readMenuChoice("Choose an exercise to delete",
+                1, workout.size()) - 1;
+
+        Exercise deletedExercise = workout.getExercises().get(exerciseToDelete);
+        String confirm = inputReader.readNonBlankString(YELLOW + "Are you sure you want to delete "
+                + deletedExercise.getName() + "? (y/n): " + RESET);
+
+        if (!confirm.equalsIgnoreCase("y")) {
+            System.out.println(CYAN + "Deletion cancelled." + RESET);
+            return;
+        }
+
+        boolean success = workout.removeExercise(exerciseToDelete);
+        if (success) {
+            System.out.println(GREEN + "Workout deleted." + RESET);
+        } else {
+            System.out.println(RED + "Failed to delete workout." + RESET);
+        }
     }
 }

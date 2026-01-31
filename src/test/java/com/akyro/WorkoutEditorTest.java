@@ -68,4 +68,23 @@ public class WorkoutEditorTest {
         assertEquals(225, e.getWeight(), .001);
         assertEquals("quads", e.getMuscleGroup());
     }
+
+    @Test
+    public void deleteExerciseTest() {
+              Workout workout = new Workout("Test");
+        Exercise exercise = new Exercise("Leg Press",
+                3, 12, 135, "legs");
+        workout.addExercise(exercise);
+
+        String fakeInput = String.join("\n",
+         "1", "y");
+       
+        Scanner scanner = new Scanner(fakeInput);
+        InputReader reader = new InputReader(scanner);
+        WorkoutEditor editor = new WorkoutEditor(reader);
+        editor.deleteExercise(workout);
+
+        assertEquals(0, workout.size());
+
+    }
 }

@@ -35,6 +35,10 @@ public class Workout {
         exercises.add(exercise);
     }
 
+    public void removeExercise(int index) {
+        exercises.remove(index);
+    }
+
     public double calculateTotalWorkoutVolume() {
         double totalVolume = 0;
         for (Exercise e : exercises) {
