@@ -1,4 +1,9 @@
-package com.akyro;
+package ui;
+
+import analytics.AnalyticsEngine;
+import analytics.WorkoutComparison;
+import model.Workout;
+import model.Exercise;
 
 public class AnalyticsPrinter {
     private static final String RED = "\u001B[31m";

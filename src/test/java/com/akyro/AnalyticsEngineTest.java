@@ -7,6 +7,10 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import analytics.AnalyticsEngine;
+import model.Exercise;
+import model.Workout;
+
 public class AnalyticsEngineTest {
     @Test
     public void testVolumePercentageBreakdown() {

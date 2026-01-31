@@ -1,4 +1,7 @@
-package com.akyro;
+package ui;
+
+import model.Exercise;
+import model.Workout;
 
 public class WorkoutEditor {
     private final InputReader inputReader;

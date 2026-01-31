@@ -1,4 +1,6 @@
-package com.akyro;
+package ui;
+
+import model.Workout;
 
 public class PrintMenus {
 

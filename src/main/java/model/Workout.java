@@ -1,4 +1,4 @@
-package com.akyro;
+package model;
 
 import java.util.ArrayList;
 

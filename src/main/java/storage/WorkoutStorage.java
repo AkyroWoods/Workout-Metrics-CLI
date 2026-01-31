@@ -1,4 +1,4 @@
-package com.akyro;
+package storage;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,8 @@ import java.util.stream.Stream;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+
+import model.Workout;
 
 public class WorkoutStorage {
     private ObjectMapper mapper;

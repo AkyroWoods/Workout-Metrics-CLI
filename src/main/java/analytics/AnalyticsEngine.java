@@ -1,4 +1,4 @@
-package com.akyro;
+package analytics;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import model.Exercise;
+import model.Workout;
 
 public class AnalyticsEngine {
     private double pushVolume;
@@ -92,7 +95,7 @@ public class AnalyticsEngine {
     public List<Map.Entry<Exercise, Double>> topNExercises(Workout workout, int n) {
         Map<Exercise, Double> sorted = getSortedExerciseVolumePercentages(workout);
         List<Map.Entry<Exercise, Double>> entries = new ArrayList<>(sorted.entrySet());
-        
+
         int limit = Math.min(n, entries.size());
         return entries.subList(0, limit);
     }

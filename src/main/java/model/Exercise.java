@@ -1,4 +1,6 @@
-package com.akyro;
+package model;
+
+import ui.FormatUtils;
 
 public class Exercise {
     private String name;

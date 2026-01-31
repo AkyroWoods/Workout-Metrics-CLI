@@ -6,6 +6,11 @@ import java.util.Scanner;
 
 import org.junit.Test;
 
+import model.Exercise;
+import model.Workout;
+import ui.InputReader;
+import ui.WorkoutEditor;
+
 public class WorkoutEditorTest {
     @Test
     public void addExerciseToWorkoutTest() {

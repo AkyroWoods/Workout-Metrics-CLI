@@ -1,4 +1,4 @@
-package com.akyro;
+package ui;
 
 import java.util.Scanner;
 

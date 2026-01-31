@@ -1,7 +1,9 @@
-package com.akyro;
+package main;
+
+import ui.UserInterface;
 
 public class Main {
-    public static void main(String[] args) { 
+    public static void main(String[] args) {
         UserInterface userInterface = new UserInterface();
         userInterface.start();
     }

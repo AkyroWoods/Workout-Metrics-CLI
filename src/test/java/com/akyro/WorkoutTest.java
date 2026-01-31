@@ -3,6 +3,9 @@ package com.akyro;
 import static org.junit.Assert.*;
 import org.junit.Test;
 
+import model.Exercise;
+import model.Workout;
+
 public class WorkoutTest {
 
     @Test
