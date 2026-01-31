@@ -56,7 +56,6 @@ public class WorkoutEditor {
                 }
             }
         }
-
     }
 
     public void addExerciseToWorkout(Workout workout) {
@@ -68,12 +67,9 @@ public class WorkoutEditor {
 
         Exercise exercise = new Exercise(name, sets, reps, weight, muscleGroup);
         workout.addExercise(exercise);
-
     }
 
     public void deleteExercise(Workout workout) {
-        workout.printWorkout();
-
         int exerciseToDelete = inputReader.readMenuChoice("Choose an exercise to delete: ",
                 1, workout.size()) - 1;
         System.out.println();

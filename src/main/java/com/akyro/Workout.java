@@ -74,5 +74,4 @@ public class Workout {
     public int size() {
         return exercises.size();
     }
-
 }

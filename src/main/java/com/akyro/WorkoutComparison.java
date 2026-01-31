@@ -76,5 +76,4 @@ public class WorkoutComparison {
         }
         return (double) volumeDifference / volumeA;
     }
-
 }

@@ -219,6 +219,7 @@ public class UserInterface {
                     editExercise(workout);
                     break;
                 case DELETE_EXERCISE:
+                    workout.printWorkout();
                     workoutEditor.deleteExercise(workout);
                     break;
                 case VIEW_SUMMARY:
@@ -245,6 +246,7 @@ public class UserInterface {
     }
 
     private void addExerciseToWorkout(Workout workout) {
+        System.out.println();
         workoutEditor.addExerciseToWorkout(workout);
         workoutSaved = false;
         System.out.println(GREEN + "Exercise added" + RESET);
@@ -267,6 +269,7 @@ public class UserInterface {
         workoutSaved = false;
 
         System.out.println(GREEN + "Exercise Updated! " + RESET);
+        System.out.println();
     }
 
     private void viewWorkoutSummary(Workout workout) {

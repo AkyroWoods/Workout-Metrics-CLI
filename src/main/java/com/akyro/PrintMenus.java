@@ -13,7 +13,7 @@ public class PrintMenus {
         System.out.println(CYAN + "=== Main Menu ===" + RESET);
         System.out.println("1: Create workout");
         System.out.println("2: Load workout");
-        System.out.println("3: List all saved workouts");
+        System.out.println("3: Load all saved workouts");
         System.out.println("4: List saved workouts");
         System.out.println("5: Compare two workouts");
         System.out.println("6: Delete workout");

@@ -44,7 +44,6 @@ public class AnalyticsEngine {
             if (currentExerciseVolume < lowestVolumeExercise.calculateTotalVolume()) {
                 lowestVolumeExercise = e;
             }
-
         }
     }
 
@@ -93,7 +92,7 @@ public class AnalyticsEngine {
     public List<Map.Entry<Exercise, Double>> topNExercises(Workout workout, int n) {
         Map<Exercise, Double> sorted = getSortedExerciseVolumePercentages(workout);
         List<Map.Entry<Exercise, Double>> entries = new ArrayList<>(sorted.entrySet());
-
+        
         int limit = Math.min(n, entries.size());
         return entries.subList(0, limit);
     }

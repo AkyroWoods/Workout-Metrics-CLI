@@ -28,7 +28,8 @@ public class AnalyticsPrinter {
             System.out.println(RED + "  Not enough exercises to display the bottom 3." + RESET);
         } else {
             for (var entry : bottom3) {
-                System.out.println(" - " + entry.getKey().getName() + ": " + FormatUtils.formatPercent(entry.getValue()));
+                System.out
+                        .println(" - " + entry.getKey().getName() + ": " + FormatUtils.formatPercent(entry.getValue()));
             }
         }
 
@@ -44,55 +45,55 @@ public class AnalyticsPrinter {
                 " (" + FormatUtils.formatNumber(highest.calculateTotalVolume()) + " lbs)");
     }
 
-    
     public void printComparison(WorkoutComparison result, Workout a, Workout b) {
         printSummary(a);
         System.out.println("--------------------------------------------------");
         System.out.println();
         printSummary(b);
-        
+
         System.out.println(CYAN + "=== " + a.getName() + " V.S " + b.getName() + " ===" + RESET);
         printVolumeDifference(result, a, b);
         System.out.println();
-        
+
         System.out.println("Common Exercises: ");
         if (result.getCommonExercises().isEmpty()) {
             System.out.println(YELLOW + " - None in common" + RESET);
         }
-        
+
         result.getCommonExercises().forEach(e -> System.out.println(" - " + e));
         System.out.println();
-        
+
         System.out.println("Unique to " + a.getName() + ":");
         result.getUniqueToA().forEach(e -> System.out.println(" - " + e));
         System.out.println();
-        
+
         System.out.println("Unique to " + b.getName() + ":");
         result.getUniqueToB().forEach(e -> System.out.println(" - " + e));
         System.out.println();
     }
-    
+
     private void printVolumeDifference(WorkoutComparison result, Workout a, Workout b) {
         double percent = result.volumeDifferenceAsPercent();
         String volumeDifference = FormatUtils.formatNumber(result.getVolumeDifference());
 
         if (a.calculateTotalWorkoutVolume() > b.calculateTotalWorkoutVolume()) {
             System.out.println(a.getName() + " volume was greater by +" + volumeDifference
-            + " lbs (+" + FormatUtils.formatPercent(percent) + ")");
+                    + " lbs (+" + FormatUtils.formatPercent(percent) + ")");
         } else if (b.calculateTotalWorkoutVolume() > a.calculateTotalWorkoutVolume()) {
             System.out.println(b.getName() + " volume was greater by +" + volumeDifference
-            + " lbs (+" + FormatUtils.formatPercent(percent) + ")");
+                    + " lbs (+" + FormatUtils.formatPercent(percent) + ")");
         } else {
             System.out.println("No difference in volume");
         }
     }
-    
+
     private void printSummary(Workout workout) {
         System.out.println(CYAN + "=== " + workout.getName() + " Summary" + " ===" + RESET);
         System.out.println("Total Volume: " + FormatUtils.formatNumber(workout.calculateTotalWorkoutVolume()) + " lbs");
         System.out.println("Exercises:");
         for (Exercise e : workout.getExercises()) {
-            System.out.println(" - " + e.getName() + ": " + FormatUtils.formatNumber(e.calculateTotalVolume()) + " lbs");
+            System.out
+                    .println(" - " + e.getName() + ": " + FormatUtils.formatNumber(e.calculateTotalVolume()) + " lbs");
         }
         System.out.println();
     }
