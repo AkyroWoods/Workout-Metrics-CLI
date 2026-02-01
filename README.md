@@ -1,32 +1,73 @@
-# Lift Metrics
+## About
 
-Lift Metrics is a command-line workout tracker that lets you log exercises and view useful training stats. Each workout records the exercise name, weight, reps, sets, and muscle group. The program automatically classifies exercises into **Push**, **Pull**, or **Legs** and calculates total volume and percentage breakdowns for each category.
-
----
-
-## Features
-
-- Log exercises with weight, reps, sets, and muscle group  
-- Automatic Push/Pull/Legs classification  
-- Total volume calculation for each exercise  
-- Volume and percentage breakdowns by PPL category  
-- Simple command-line interface  
-- Maven project structure for easy setup  
-- JSON save/load support coming soon  
+Workout Metrics CLI is a command‑line tool for tracking workouts and calculating training volume. You can log exercises with sets, reps, weight, and muscle group, and the program automatically classifies them into Push, Pull, and Legs categories. It also provides analytics such as your top and bottom three exercises by volume percentage and your highest‑volume exercise overall. Workouts can be saved to JSON files, loaded later, and compared side‑by‑side to see how your training sessions differ.
 
 ---
 
-## How It Works
+##  Highlights
 
-1. You enter exercises for a workout.  
-2. The program groups them into Push, Pull, or Legs based on the muscle group.  
-3. It calculates total volume using weight × reps × sets.  
-4. It shows how much of your workout came from each category, both in raw volume and percentages.
+- Log exercises with sets, reps, weight, and muscle group  
+- Automatic Push / Pull / Legs classification  
+- Volume calculations for each exercise and the entire workout  
+- JSON‑based save/load system with filename sanitization
+- Automatic filename‑duplication checks to prevent overwriting saved workouts
+- Side‑by‑side workout comparison  
+- Easy to navigate CLI experience
+  
+---
+
+### Why this project exists
+
+I built this to practice:
+- strengthening my core Java and OOP fundamentals
+- working with files and JSON for saving and loading data
+- applying clean architecture principles in a small application
+- organizing code into clear, meaningful packages
+- building a predictable, user‑friendly command‑line interface
+- implementing analytics on top of a simple workout data model
 
 ---
 
-## Planned Additions
+##  Usage
 
-- JSON persistence for saving and loading workout history  
-- Optional weekly or monthly breakdowns  
-- Potential GUI or web interface in the future  
+Workout Metrics CLI is menu‑driven and easy to navigate.
+From the main menu, you can create new workouts, load or list saved workouts, compare sessions, or delete old ones. Once a workout is loaded, you can add, edit, or remove exercises, view summaries and analytics, and save your progress before returning to the main menu.
+
+---
+
+##  Screenshots
+
+### Main Menu
+![Main Menu](images/Main-Menu.png)
+
+### Analytics Output
+![Analytics](images/Analytics.png)
+
+Top and bottom exercises by volume percentage, P/P/L distribution, and highest‑volume movement.
+
+### Workout Comparison
+![Comparison](images/Comparison.png)
+
+Summary of both workouts, which one had higher volume, their shared exercises, and the movements unique to each.
+
+---
+
+## Installation
+
+### Clone the repository:
+
+```bash
+git clone https://github.com/AkyroWoods/Workout-Metrics-CLI.git
+cd Workout-Metrics-CLI
+```
+
+### Build the project with Maven
+```bash
+mvn clean package
+```
+
+### Run the program
+``` bash
+java -jar target/workout-metrics-cli.jar
+```
+
